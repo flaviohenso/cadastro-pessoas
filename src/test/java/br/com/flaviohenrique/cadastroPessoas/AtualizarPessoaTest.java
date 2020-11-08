@@ -13,7 +13,6 @@ import br.com.flaviohenrique.cadastroPessoas.service.PessoaService;
 
 
 @SpringBootTest
-
 class AtualizarPessoaTest {
 	
 	@Autowired
