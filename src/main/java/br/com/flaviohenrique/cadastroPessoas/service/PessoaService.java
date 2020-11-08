@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.flaviohenrique.cadastroPessoas.domain.Pessoa;
 import br.com.flaviohenrique.cadastroPessoas.domain.exception.BusinessException;
+import br.com.flaviohenrique.cadastroPessoas.domain.exception.EntidadeNaoEncontradaException;
+import br.com.flaviohenrique.cadastroPessoas.dto.PessoaMapper;
+import br.com.flaviohenrique.cadastroPessoas.dto.PessoaUpdateDto;
 import br.com.flaviohenrique.cadastroPessoas.repository.PessoaRepository;
 import br.com.flaviohenrique.cadastroPessoas.specification.PessoaSpecification;
 import br.com.flaviohenrique.cadastroPessoas.specification.SearchCriteria;
@@ -30,6 +33,9 @@ public class PessoaService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@Autowired
+	private PessoaMapper pessoaMapper;
 
 	/*
 	 * verificar se já existe um registro no banco para o cpf, caso nao exista
@@ -37,11 +43,13 @@ public class PessoaService {
 	 */
 	public Pessoa salvar(Pessoa pessoa) {
 
+		if(!pessoa.validaContato()) {
+			throw new BusinessException("Dados dos contatos estão incorreto!");
+		}
 		Pessoa pessoaExiste = pessoaRespository.findByCpf(pessoa.getCpf());
 		if (pessoaExiste != null) {
 			throw new BusinessException("CPF já cadastrado!");
 		}
-
 		return pessoaRespository.save(pessoa);
 	}
 
@@ -55,7 +63,6 @@ public class PessoaService {
 		if (pessoa.isPresent()) {
 			return pessoa.get();
 		}
-
 		return null;
 	}
 
@@ -66,10 +73,10 @@ public class PessoaService {
 
 		log.info("Buscar por filtro");
 		PessoaSpecification pessoaSpecification = new PessoaSpecification();
-		log.info(pessoa.toString());
 		pessoaSpecification.add(new SearchCriteria("nome", pessoa.getNome(), SearchOperation.LIKE));
-		//pessoaSpecification.add(new SearchCriteria("cpf", pessoa.getNome(), SearchOperation.LIKE));
-		
+		// pessoaSpecification.add(new SearchCriteria("cpf", pessoa.getNome(),
+		// SearchOperation.LIKE));
+
 		Pageable pageable = PageRequest.of(pagina, tamanhoPagina, Sort.by("nome").descending());
 		Page<Pessoa> psPessoaList = pessoaRespository.findAll(pessoaSpecification, pageable);
 
@@ -81,10 +88,6 @@ public class PessoaService {
 		return pessoaRespository.findByNomeContaining(nome);
 	}
 
-	public List<Pessoa> tudo() {
-		return pessoaRespository.findAll();
-	}
-
 	public Boolean deletar(Long id) {
 		if (!pessoaRespository.existsById(id)) {
 			return false;
@@ -93,13 +96,13 @@ public class PessoaService {
 		return true;
 	}
 
-	public Pessoa atualizar(Pessoa pessoa) {
-		if (!pessoaRespository.existsById(pessoa.getId())) {
-			return null;
-		}
+	public Pessoa atualizar(PessoaUpdateDto pessoaUpdateDto) {
 
-		pessoaRespository.save(pessoa);
-		return pessoa;
+		log.info(pessoaUpdateDto.toString());
+		Pessoa pessoa = pessoaRespository.findById(pessoaUpdateDto.getId())
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("Pessoa não encontrada!"));	
+		pessoaMapper.updatePessoaFromPessoaUpdateDto(pessoaUpdateDto, pessoa);
+		return pessoaRespository.save(pessoa);
 	}
 
 }

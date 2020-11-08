@@ -3,7 +3,9 @@ package br.com.flaviohenrique.cadastroPessoas.dto;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-public class PessoaInputDto extends PessoaDto{
+public class PessoaInputDto{
 
 	@NotBlank(message = "O nome é obrigatório")
 	private String nome;
@@ -32,8 +34,8 @@ public class PessoaInputDto extends PessoaDto{
 	@NotNull
 	@Past(message = "Data de nascimento está errada!")
 	private OffsetDateTime data_nascimento;
-	
+
+	@OneToMany(targetEntity=ContatoInputDto.class,cascade = {CascadeType.ALL})
 	@NotEmpty(message = "Deve ser informando pelo menos um contato")
-	@OneToMany
-	private List<ContatoInputDto> contatos;
+	private List<@Valid ContatoInputDto> contatos;
 }

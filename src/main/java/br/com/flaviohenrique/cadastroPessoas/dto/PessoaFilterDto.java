@@ -1,15 +1,15 @@
 package br.com.flaviohenrique.cadastroPessoas.dto;
 
+import java.time.OffsetDateTime;
+
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper=true)
-public class PessoaFilterDto extends PessoaDto{
+public class PessoaFilterDto{
 
 	private String nome;
 	private String cpf;
-	private String data_nascimento;
+	private OffsetDateTime data_nascimento;
 	private Integer pagina;
 	private Integer tamanhoPagina;
 	

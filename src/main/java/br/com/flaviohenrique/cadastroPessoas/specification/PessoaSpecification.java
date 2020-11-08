@@ -85,7 +85,7 @@ public class PessoaSpecification implements Specification<Pessoa> {
             } else if (criteria.getOperation().equals(SearchOperation.LIKE)) {
                 predicates.add(criteriaBuilder.like(
                 				criteriaBuilder.lower(root.get(criteria.getKey())),
-                                criteria.getValue().toString().toLowerCase() + "%"));
+                                "%"+criteria.getValue().toString().toLowerCase() + "%"));
             } else if (criteria.getOperation().equals(SearchOperation.IN)) {
                 predicates.add(criteriaBuilder.in(root.get(criteria.getKey())).value(criteria.getValue()));
             } else if (criteria.getOperation().equals(SearchOperation.NOT_IN)) {

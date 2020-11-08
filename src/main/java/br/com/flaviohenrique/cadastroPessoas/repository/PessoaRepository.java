@@ -14,4 +14,5 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>, JpaSpecif
 	public List<Pessoa> findByNomeContaining(String nome);
 	public Pessoa findByCpf(String cpf);
 
+
 }
