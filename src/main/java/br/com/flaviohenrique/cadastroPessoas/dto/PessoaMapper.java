@@ -15,5 +15,6 @@ public interface PessoaMapper {
 	
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 	void updatePessoaFromPessoaUpdateDto(PessoaUpdateDto pessoaUpdateDto, @MappingTarget Pessoa entity);
-	
+	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+	void updateContatoFromPessoaUpdateDto(List<ContatoUpdateDto> contatoUpdateDtos, @MappingTarget List<Contato> entity);
 }
