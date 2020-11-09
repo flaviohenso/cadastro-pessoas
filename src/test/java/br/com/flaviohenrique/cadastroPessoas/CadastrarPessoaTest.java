@@ -43,7 +43,7 @@ class CadastrarPessoaTest {
 	}
 	
 	@Test
-	final void insertPessoaCpfJaCadastroBancoTest() {		
+	final void insertPessoaCpfJaCadastroBancoTest() {		 
 		List<ContatoInputDto> contatoInputDtos = new ArrayList<>();
 		
 		contatoInputDtos.add(new ContatoInputDto("Andreia", "998218129", "andreia@gmail.com"));		
