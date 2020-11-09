@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-11-08T22:35:12-0300",
+    date = "2020-11-08T23:03:04-0300",
     comments = "version: 1.4.1.Final, compiler: Eclipse JDT (IDE) 1.3.1100.v20200828-0941, environment: Java 14.0.2 (Oracle Corporation)"
 )
 @Component
@@ -21,11 +21,18 @@ public class PessoaMapperImpl implements PessoaMapper {
             return;
         }
 
-        if ( pessoaUpdateDto.getContatos() != null ) {
-            if ( entity.getContatos() == null ) {
-                entity.setContatos( new ArrayList<Contato>() );
+        if ( entity.getContatos() != null ) {
+            List<Contato> list = contatoUpdateDtoListToContatoList( pessoaUpdateDto.getContatos() );
+            if ( list != null ) {
+                entity.getContatos().clear();
+                entity.getContatos().addAll( list );
             }
-            updateContatoFromPessoaUpdateDto( pessoaUpdateDto.getContatos(), entity.getContatos() );
+        }
+        else {
+            List<Contato> list = contatoUpdateDtoListToContatoList( pessoaUpdateDto.getContatos() );
+            if ( list != null ) {
+                entity.setContatos( list );
+            }
         }
         if ( pessoaUpdateDto.getCpf() != null ) {
             entity.setCpf( pessoaUpdateDto.getCpf() );
@@ -38,18 +45,6 @@ public class PessoaMapperImpl implements PessoaMapper {
         }
         if ( pessoaUpdateDto.getNome() != null ) {
             entity.setNome( pessoaUpdateDto.getNome() );
-        }
-    }
-
-    @Override
-    public void updateContatoFromPessoaUpdateDto(List<ContatoUpdateDto> contatoUpdateDtos, List<Contato> entity) {
-        if ( contatoUpdateDtos == null ) {
-            return;
-        }
-
-        entity.clear();
-        for ( ContatoUpdateDto contatoUpdateDto : contatoUpdateDtos ) {
-            entity.add( contatoUpdateDtoToContato( contatoUpdateDto ) );
         }
     }
 
@@ -66,5 +61,18 @@ public class PessoaMapperImpl implements PessoaMapper {
         contato.setTelefone( contatoUpdateDto.getTelefone() );
 
         return contato;
+    }
+
+    protected List<Contato> contatoUpdateDtoListToContatoList(List<ContatoUpdateDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Contato> list1 = new ArrayList<Contato>( list.size() );
+        for ( ContatoUpdateDto contatoUpdateDto : list ) {
+            list1.add( contatoUpdateDtoToContato( contatoUpdateDto ) );
+        }
+
+        return list1;
     }
 }
