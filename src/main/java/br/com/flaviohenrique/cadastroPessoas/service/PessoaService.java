@@ -74,9 +74,6 @@ public class PessoaService {
 		log.info("Buscar por filtro");
 		PessoaSpecification pessoaSpecification = new PessoaSpecification();
 		pessoaSpecification.add(new SearchCriteria("nome", pessoa.getNome(), SearchOperation.LIKE));
-		// pessoaSpecification.add(new SearchCriteria("cpf", pessoa.getNome(),
-		// SearchOperation.LIKE));
-
 		Pageable pageable = PageRequest.of(pagina, tamanhoPagina, Sort.by("nome").descending());
 		Page<Pessoa> psPessoaList = pessoaRespository.findAll(pessoaSpecification, pageable);
 
