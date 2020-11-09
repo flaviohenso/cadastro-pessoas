@@ -28,6 +28,8 @@ class CadastrarPessoaTest {
 	@Autowired
 	private SimpleSourceDestinationMapper mapper;
 	
+
+	
 	@Test
 	final void insertPessoaBancoTest() {		
 		List<ContatoInputDto> contatoInputDtos = new ArrayList<>();
@@ -51,4 +53,5 @@ class CadastrarPessoaTest {
 		Pessoa pessoa = mapper.pessoaInputDtoToPessoa(pessoaInputDto);
 		assertEquals(new BusinessException("CPF já cadastrado!"),pessoaService.salvar(pessoa));
 	}
+	
 }

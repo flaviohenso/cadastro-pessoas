@@ -49,6 +49,9 @@ public class Pessoa {
 	@Past(message = "Data de nascimento está errada!")
 	private OffsetDateTime data_nascimento;
 
+	/* Foi definida a estrategia de FetchType.EAGER no relacionamento de pessoa com contato, para realizar uma consulta
+	 * a menos no banco de dados, uma vez que a quantidade de contatos é pequena.
+	 */
 	@OneToMany(targetEntity = Contato.class, fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
 	@NotEmpty(message = "Deve ser informando pelo menos um contato")
 	private List<@Valid Contato> contatos;

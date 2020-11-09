@@ -38,7 +38,8 @@ public class PessoaController {
 	private SimpleSourceDestinationMapper mapper;
 	
 	/*
-	 * Endpoint: 
+	 * Endpoint: recebe o DTO de pessoa, faz o mapeamento do dto para a entity, manda salvar a entity da base de dados,
+	 * mapea o retorno para um DTO.
 	 */
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
@@ -51,8 +52,8 @@ public class PessoaController {
 	}
 	
 	/*
-	 * Foi definida definid a estrategia de FetchType.EAGER no relacionamento de pessoa com contato, para realizar uma consulta
-	 * a menos no banco de dados, uma vez que a quantidade de contatos é pequena.
+	 * Endpoint: receber o id pela url da requisicao, busca na base de dados o id, mapea o retorno da busca para um
+	 * DTO, verifica se DTO esta nulo e retorna um ResponseEntity.
 	 */
 	@GetMapping("{id}")
 	public ResponseEntity<PessoaResponseDto> buscar(@PathVariable Long id){
@@ -63,7 +64,10 @@ public class PessoaController {
 		return  pessoaResponseDto != null ? ResponseEntity.ok(pessoaResponseDto) : ResponseEntity.notFound().build();
 	}
 	
-	@GetMapping
+	/*
+	 * Endpoint
+	 */
+	@PostMapping("buscar")
 	public ResponseEntity<List<PessoaResponseDto>> buscarPessoas(@RequestBody PessoaFilterDto pessoaFilterDto){
 		log.info("chamada ao Endpoint buscarPessoas");
 		

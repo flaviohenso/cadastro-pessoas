@@ -16,7 +16,7 @@
 	<description>API Rest de um cadastro de Pessoas, utilizando Spring Boot e Java</description>
 
 	<properties>
-		<java.version>1.11</java.version>
+		<java.version>11</java.version>
 		<modelmapper.version>2.3.8</modelmapper.version>
 	</properties>
 
@@ -95,10 +95,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
+				<version>3.6.1</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
+					<maven.compiler.source>${java.version}</maven.compiler.source>
+					<maven.compiler.target>${java.version}</maven.compiler.target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>

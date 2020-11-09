@@ -18,22 +18,6 @@ public class PessoaSpecification implements Specification<Pessoa> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-//	public static Specification<Pessoa> nome(String nome) {
-//        return (root, criteriaQuery, criteriaBuilder) ->
-//                criteriaBuilder.equal(root.get("nome"), nome);
-//    }
-// 
-//    public static Specification<Pessoa> cpf(String cpf) {
-//        return (root, criteriaQuery, criteriaBuilder) ->
-//                criteriaBuilder.equal(root.get("cpf"), cpf);
-//    }
-// 
-//    public static Specification<Pessoa> dataNascimento(Integer dataNascimento) {
-//        return (root, criteriaQuery, criteriaBuilder) ->
-//                criteriaBuilder.equal(root.get("data_nascimento"), dataNascimento);
-//    }
-//	
 	
 	static Specification<Pessoa> buscarByNome(String nome) {
 	    return (pessoa, cq, cb) -> cb.equal(pessoa.get("nome"), nome);
